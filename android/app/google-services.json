@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "142604141048",
+    "project_id": "eso-akte-sikhi",
+    "storage_bucket": "eso-akte-sikhi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142604141048:android:0a0f3f0a6c35e85783d60d",
+        "android_client_info": {
+          "package_name": "com.arrijal.eso_akte_sikhi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa_F_LEn0aHev_NMKJeAENrpo2j7nyNH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
