@@ -15,11 +15,19 @@ dependencies:
 
 dev_dependencies: 
   flutter_lints: 3.0.2
-  flutter_test: 
-
-
+  flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: 'Assets/MyLogo.png'
 
 flutter: 
   uses-material-design: true
-
+  assets:
+    - Assets/mainback.png
+    - Assets/maincenter.png
+    - Assets/maincenup.png
+    - Assets/pencil.png
