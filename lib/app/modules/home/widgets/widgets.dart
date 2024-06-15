@@ -32,7 +32,7 @@ class TwoBorderButton extends StatelessWidget {
           child: Text(
             names,
             style: const TextStyle(
-                fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+                fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
       ),
