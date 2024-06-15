@@ -2,10 +2,10 @@ import 'package:eso_akte_sikhi/app/modules/home/widgets/widgets.dart';
 import 'package:eso_akte_sikhi/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/editor_page_controller.dart';
+import '../controllers/item_list_controller.dart';
 
-class EditorPageView extends GetView<EditorPageController> {
-  const EditorPageView({super.key});
+class ItemListView extends GetView<ItemListController> {
+  const ItemListView({super.key});
   final int numberOfImages = 8;
   List<String> get artObjPaths {
     return List<String>.generate(

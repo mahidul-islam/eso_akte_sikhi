@@ -6,13 +6,13 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   static const HOME = _Paths.HOME;
-  static const EDITOR_PAGE = _Paths.EDITOR_PAGE;
+  static const EDITOR_PAGE = _Paths.ITEM_LIST;
   static const OBJECT_EDITOR = _Paths.OBJECT_EDITOR;
 }
 
 abstract class _Paths {
   _Paths._();
   static const HOME = '/home';
-  static const EDITOR_PAGE = '/editor-page';
+  static const ITEM_LIST = '/item-list';
   static const OBJECT_EDITOR = '/object-editor';
 }
