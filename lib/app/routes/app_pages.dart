@@ -24,7 +24,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.EDITOR_PAGE,
-      page: () => EditorPageView(),
+      page: () => const EditorPageView(),
       binding: EditorPageBinding(),
     ),
     GetPage(

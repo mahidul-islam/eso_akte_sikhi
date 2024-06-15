@@ -103,7 +103,7 @@ class ObjectEditorView extends GetView<ObjectEditorController> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               color: const Color(0xffFFA732),
               height: 90,
               child: Row(
