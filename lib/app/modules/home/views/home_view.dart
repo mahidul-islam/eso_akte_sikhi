@@ -18,7 +18,7 @@ class HomeView extends GetView<HomeController> {
         children: <Widget>[
           Positioned.fill(
             child: Image.asset(
-              'Assets/mainback.png',
+              'assets/mainback.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -29,7 +29,7 @@ class HomeView extends GetView<HomeController> {
                   height: Get.height / 13,
                 ),
                 SvgPicture.asset(
-                  'Assets/drawingBook.svg',
+                  'assets/drawingBook.svg',
                   width: 220,
                   height: 130,
                 ),
@@ -41,7 +41,7 @@ class HomeView extends GetView<HomeController> {
                     Get.toNamed(Routes.EDITOR_PAGE);
                   },
                   child: Image.asset(
-                    'Assets/maincenup.png',
+                    'assets/maincenup.png',
                     height: Get.height / 7,
                     fit: BoxFit.fitHeight,
                   ),
@@ -50,7 +50,7 @@ class HomeView extends GetView<HomeController> {
                   height: Get.height / 50,
                 ),
                 Image.asset(
-                  'Assets/maincenter.png',
+                  'assets/maincenter.png',
                   height: Get.height / 3,
                   fit: BoxFit.fitHeight,
                 ),

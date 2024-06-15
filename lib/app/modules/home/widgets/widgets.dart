@@ -58,28 +58,27 @@ class Tex extends StatelessWidget {
       rcvd,
       style: TextStyle(
         fontFamily: 'Jokerman',
-        // fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.bold,
         fontSize: fsize,
-        // fontStyle: FontStyle.italic,
         color: colo,
-        // shadows: const [
-        //   Shadow(
-        //     offset: Offset(-2, -2),
-        //     color: Colors.black,
-        //   ),
-        //   Shadow(
-        //     offset: Offset(2, -2),
-        //     color: Colors.black,
-        //   ),
-        //   Shadow(
-        //     offset: Offset(2, 2),
-        //     color: Colors.black,
-        //   ),
-        //   Shadow(
-        //     offset: Offset(-2, 2),
-        //     color: Colors.black,
-        //   ),
-        // ],
+        shadows: const [
+          Shadow(
+            offset: Offset(-1, -1),
+            color: Colors.black,
+          ),
+          Shadow(
+            offset: Offset(1, -1),
+            color: Colors.black,
+          ),
+          Shadow(
+            offset: Offset(1, 1),
+            color: Colors.black,
+          ),
+          Shadow(
+            offset: Offset(-1, 1),
+            color: Colors.black,
+          ),
+        ],
       ),
     );
   }

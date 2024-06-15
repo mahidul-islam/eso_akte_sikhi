@@ -23,12 +23,13 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: 'Assets/MyLogo.png'
+  image_path: 'assets/MyLogo.png'
 
 flutter: 
   uses-material-design: true
   assets:
     - assets/
+    - assets//artObjs/
 
   fonts:
     - family: Jokerman
