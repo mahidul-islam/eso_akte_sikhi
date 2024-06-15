@@ -10,7 +10,7 @@ class EditorPageView extends GetView<EditorPageController> {
   List<String> get artObjPaths {
     return List<String>.generate(
       numberOfImages,
-      (index) => 'assets/artObjs/artObj${index + 1}.png',
+      (index) => 'assets/art_objs/artObj${index + 1}.png',
     );
   }
 

@@ -29,7 +29,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
-    - assets//artObjs/
+    - assets//art_objs/
+    - assets/edit_bar/
 
   fonts:
     - family: Jokerman
