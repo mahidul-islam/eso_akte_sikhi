@@ -4,8 +4,8 @@ import '../modules/item_list/bindings/item_list_binding.dart';
 import '../modules/item_list/views/item_list_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-import '../modules/object_editor/bindings/object_editor_binding.dart';
-import '../modules/object_editor/views/object_editor_view.dart';
+import '../modules/drawing_page/bindings/drawing_page_binding.dart';
+import '../modules/drawing_page/views/drawing_page_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -28,9 +28,9 @@ class AppPages {
       binding: ItemListBinding(),
     ),
     GetPage(
-      name: _Paths.OBJECT_EDITOR,
-      page: () => const ObjectEditorView(),
-      binding: ObjectEditorBinding(),
+      name: _Paths.DRAWING_PAGE,
+      page: () => const DrawingPageView(),
+      binding: DrawingPageBinding(),
     ),
   ];
 }

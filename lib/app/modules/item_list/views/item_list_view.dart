@@ -113,7 +113,7 @@ class Box extends StatelessWidget {
       padding: const EdgeInsets.all(5.0),
       child: GestureDetector(
         onTap: () {
-          Get.toNamed(Routes.OBJECT_EDITOR);
+          Get.toNamed(Routes.DRAWING_PAGE);
         },
         child: Container(
           decoration: BoxDecoration(

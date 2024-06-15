@@ -2,10 +2,10 @@ import 'package:eso_akte_sikhi/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import '../controllers/object_editor_controller.dart';
+import '../controllers/drawing_page_controller.dart';
 
-class ObjectEditorView extends GetView<ObjectEditorController> {
-  const ObjectEditorView({super.key});
+class DrawingPageView extends GetView<DrawingPageController> {
+  const DrawingPageView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +41,7 @@ class ObjectEditorView extends GetView<ObjectEditorController> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.EDITOR_PAGE);
+                    Get.toNamed(Routes.ITEM_LIST);
                   },
                   child: SvgPicture.asset(
                     'assets/edit_bar/back.svg',

@@ -38,7 +38,7 @@ class HomeView extends GetView<HomeController> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.EDITOR_PAGE);
+                    Get.toNamed(Routes.ITEM_LIST);
                   },
                   child: Image.asset(
                     'assets/maincenup.png',
