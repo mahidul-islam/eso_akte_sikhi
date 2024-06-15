@@ -1,3 +1,4 @@
+import 'package:eso_akte_sikhi/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/home_controller.dart';
@@ -81,10 +82,15 @@ class HomeView extends GetView<HomeController> {
                 SizedBox(
                   height: Get.height / 50,
                 ),
-                Image.asset(
-                  'Assets/maincenup.png',
-                  height: Get.height / 7,
-                  fit: BoxFit.fitHeight,
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(Routes.EDITOR_PAGE);
+                  },
+                  child: Image.asset(
+                    'Assets/maincenup.png',
+                    height: Get.height / 7,
+                    fit: BoxFit.fitHeight,
+                  ),
                 ),
                 SizedBox(
                   height: Get.height / 50,
