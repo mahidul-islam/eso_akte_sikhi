@@ -2,5 +2,5 @@
 
 class SVGAsset {
   SVGAsset._();
-  // static const String male_gender_ic = 'assets/svg/iconIcMale.svg';
+  static const String main_icon = 'assets/drawingBook.svg';
 }

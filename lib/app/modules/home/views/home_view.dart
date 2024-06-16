@@ -1,5 +1,6 @@
 import 'package:eso_akte_sikhi/app/routes/app_pages.dart';
 import 'package:eso_akte_sikhi/app/shared/const/image_asset.dart';
+import 'package:eso_akte_sikhi/app/shared/const/svg_asset.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -30,7 +31,7 @@ class HomeView extends GetView<HomeController> {
                   height: Get.height / 13,
                 ),
                 SvgPicture.asset(
-                  ImageAsset.play_ic,
+                  SVGAsset.main_icon,
                   width: 220,
                   height: 130,
                 ),
@@ -42,7 +43,7 @@ class HomeView extends GetView<HomeController> {
                     Get.toNamed(Routes.ITEM_LIST);
                   },
                   child: Image.asset(
-                    '',
+                    ImageAsset.play_ic,
                     height: Get.height / 7,
                     fit: BoxFit.fitHeight,
                   ),
