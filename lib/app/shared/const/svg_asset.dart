@@ -10,4 +10,7 @@ class SVGAsset {
   static const String download = 'assets/edit_bar/download.svg';
   static const String share = 'assets/edit_bar/Share.svg';
   static const String dot = 'assets/edit_bar/Dot.svg';
+  static const String rubber = 'assets/edit_bar/rubber.svg';
+  static const String round = 'assets/edit_bar/round.svg';
+  static const String pan = 'assets/edit_bar/pan.svg';
 }

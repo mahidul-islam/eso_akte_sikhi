@@ -111,10 +111,28 @@ class DrawingPageView extends GetView<DrawingPageController> {
               children: [
                 SvgPicture.asset(
                   SVGAsset.dot,
-                  height: 40.0,
-                  width: 40.0,
+                  height: 30.0,
+                  width: 30.0,
                 ),
-                Slider(value: 3, max: 20, min: 0, onChanged: (_) {})
+                Expanded(
+                  child: Slider(
+                    value: 3,
+                    max: 20,
+                    min: 0,
+                    onChanged: (_) {},
+                  ),
+                ),
+                SvgPicture.asset(
+                  SVGAsset.rubber,
+                  height: 30.0,
+                  width: 30.0,
+                ),
+                const SizedBox(width: 4),
+                SvgPicture.asset(
+                  SVGAsset.pan,
+                  height: 30.0,
+                  width: 30.0,
+                ),
               ],
             ),
           ),
