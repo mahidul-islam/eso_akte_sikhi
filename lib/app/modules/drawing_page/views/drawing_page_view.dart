@@ -105,7 +105,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
           ),
           Container(
             padding: const EdgeInsets.all(10),
-            color: const Color(0xffFFA732),
+            color: EASColors.orange.withOpacity(0.4),
             height: 90,
             child: Row(
               children: [
@@ -116,6 +116,9 @@ class DrawingPageView extends GetView<DrawingPageController> {
                 ),
                 Expanded(
                   child: Slider(
+                    activeColor: EASColors.violet.withOpacity(0.4),
+                    inactiveColor: EASColors.violet.withOpacity(0.4),
+                    thumbColor: EASColors.orange,
                     value: 3,
                     max: 20,
                     min: 0,
