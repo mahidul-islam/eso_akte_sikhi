@@ -1,4 +1,5 @@
 import 'package:eso_akte_sikhi/app/routes/app_pages.dart';
+import 'package:eso_akte_sikhi/app/shared/const/colors.dart';
 import 'package:eso_akte_sikhi/app/shared/const/svg_asset.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -100,7 +101,6 @@ class DrawingPageView extends GetView<DrawingPageController> {
           Expanded(
             child: Container(
               color: const Color.fromARGB(96, 211, 209, 209),
-              height: Get.height / 2,
             ),
           ),
           Container(
@@ -119,6 +119,43 @@ class DrawingPageView extends GetView<DrawingPageController> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        color: EASColors.lightReddish,
+        height: 130 + Get.mediaQuery.padding.bottom,
+        width: Get.width,
+        padding: EdgeInsets.only(bottom: Get.mediaQuery.padding.bottom),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemBuilder: (_, int index) {
+              return Obx(() {
+                return Column(
+                  mainAxisAlignment:
+                      controller.selectedColorIndex.value == index
+                          ? MainAxisAlignment.start
+                          : MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        controller.selectedColorIndex.value = index;
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 8),
+                        width: 32,
+                        height: 76,
+                        color: EASColors.selectedColor[index],
+                      ),
+                    ),
+                  ],
+                );
+              });
+            },
+            itemCount: EASColors.selectedColor.length,
+          ),
+        ),
       ),
     );
   }

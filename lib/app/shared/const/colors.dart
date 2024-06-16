@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SGColors {
-  SGColors._();
+class EASColors {
+  EASColors._();
   static const Color black = Color(0xff181c23);
   static const Color blackShade1 = Color(0xff3f4755);
   static const Color blackShade2 = Color(0xff70798a);
