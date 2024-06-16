@@ -1,16 +1,19 @@
-import 'package:eso_akte_sikhi/app/modules/home/widgets/widgets.dart';
 import 'package:eso_akte_sikhi/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import '../../home/widgets/widgets.dart';
 import '../controllers/item_list_controller.dart';
 
 class ItemListView extends GetView<ItemListController> {
   const ItemListView({super.key});
-  final int numberOfImages = 8;
+
+  static const int numberOfImages = 8;
+
   List<String> get artObjPaths {
     return List<String>.generate(
       numberOfImages,
-      (index) => 'assets/art_objs/artObj${index + 1}.png',
+      (index) => 'assets/art_objs/artObj${index + 1}.svg',
     );
   }
 
@@ -65,9 +68,10 @@ class ItemListView extends GetView<ItemListController> {
                     const Expanded(
                       child: Center(
                         child: Tex(
-                            rcvd: 'SELECT DRAWING',
-                            fsize: 25,
-                            colo: Colors.red),
+                          rcvd: 'SELECT DRAWING',
+                          fsize: 25,
+                          colo: Colors.red,
+                        ),
                       ),
                     )
                   ],
@@ -104,26 +108,25 @@ class Box extends StatelessWidget {
     required this.artObjPaths,
     required this.index,
   });
+
   final int index;
   final List<String> artObjPaths;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: GestureDetector(
-        onTap: () {
-          Get.toNamed(Routes.DRAWING_PAGE);
-        },
-        child: Container(
-          decoration: BoxDecoration(
-              color: const Color(0xffFFF8EF),
-              border: Border.all(color: const Color(0xffFF3838), width: 2),
-              borderRadius: BorderRadius.circular(15)),
-          child: Image.asset(
-            artObjPaths[index],
-            fit: BoxFit.scaleDown,
-          ),
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(Routes.DRAWING_PAGE);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xffFFF8EF),
+          border: Border.all(color: const Color(0xffFF3838), width: 2),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: SvgPicture.asset(
+          artObjPaths[index],
+          fit: BoxFit.scaleDown,
         ),
       ),
     );
