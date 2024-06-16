@@ -1,4 +1,5 @@
 import 'package:eso_akte_sikhi/app/routes/app_pages.dart';
+import 'package:eso_akte_sikhi/app/shared/const/svg_asset.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -44,7 +45,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                     Get.toNamed(Routes.ITEM_LIST);
                   },
                   child: SvgPicture.asset(
-                    'assets/edit_bar/back.svg',
+                    SVGAsset.back,
                     height: 50.0,
                     width: 50.0,
                   ),
@@ -52,7 +53,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                 GestureDetector(
                   onTap: () {},
                   child: SvgPicture.asset(
-                    'assets/edit_bar/bin.svg',
+                    SVGAsset.delete,
                     height: 50.0,
                     width: 50.0,
                   ),
@@ -60,7 +61,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                 GestureDetector(
                   onTap: () {},
                   child: SvgPicture.asset(
-                    'assets/edit_bar/Undo.svg',
+                    SVGAsset.undo,
                     height: 50.0,
                     width: 50.0,
                   ),
@@ -68,7 +69,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                 GestureDetector(
                   onTap: () {},
                   child: SvgPicture.asset(
-                    'assets/edit_bar/Redo.svg',
+                    SVGAsset.redo,
                     height: 50.0,
                     width: 50.0,
                   ),
@@ -76,7 +77,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                 GestureDetector(
                   onTap: () {},
                   child: SvgPicture.asset(
-                    'assets/edit_bar/download.svg',
+                    SVGAsset.download,
                     height: 50.0,
                     width: 50.0,
                   ),
@@ -84,7 +85,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                 GestureDetector(
                   onTap: () {},
                   child: SvgPicture.asset(
-                    'assets/edit_bar/Share.svg',
+                    SVGAsset.share,
                     height: 50.0,
                     width: 50.0,
                   ),
@@ -109,7 +110,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
             child: Row(
               children: [
                 SvgPicture.asset(
-                  'assets/edit_bar/Dot.svg',
+                  SVGAsset.dot,
                   height: 40.0,
                   width: 40.0,
                 ),

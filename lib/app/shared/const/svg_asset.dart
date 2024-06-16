@@ -3,4 +3,11 @@
 class SVGAsset {
   SVGAsset._();
   static const String main_icon = 'assets/drawingBook.svg';
+  static const String back = 'assets/edit_bar/back.svg';
+  static const String delete = 'assets/edit_bar/bin.svg';
+  static const String undo = 'assets/edit_bar/Undo.svg';
+  static const String redo = 'assets/edit_bar/Redo.svg';
+  static const String download = 'assets/edit_bar/download.svg';
+  static const String share = 'assets/edit_bar/Share.svg';
+  static const String dot = 'assets/edit_bar/Dot.svg';
 }
