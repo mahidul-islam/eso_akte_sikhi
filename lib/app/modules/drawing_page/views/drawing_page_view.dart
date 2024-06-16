@@ -115,14 +115,19 @@ class DrawingPageView extends GetView<DrawingPageController> {
                   width: 30.0,
                 ),
                 Expanded(
-                  child: Slider(
-                    activeColor: EASColors.violet.withOpacity(0.4),
-                    inactiveColor: EASColors.violet.withOpacity(0.4),
-                    thumbColor: EASColors.orange,
-                    value: 3,
-                    max: 20,
-                    min: 0,
-                    onChanged: (_) {},
+                  child: SliderTheme(
+                    data: const SliderThemeData(
+                      trackHeight: 25,
+                    ),
+                    child: Slider(
+                      activeColor: EASColors.violet.withOpacity(0.4),
+                      inactiveColor: EASColors.violet.withOpacity(0.4),
+                      thumbColor: EASColors.orange,
+                      value: 3,
+                      max: 20,
+                      min: 0,
+                      onChanged: (_) {},
+                    ),
                   ),
                 ),
                 SvgPicture.asset(
