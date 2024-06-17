@@ -1,7 +1,9 @@
 import 'package:eso_akte_sikhi/app/routes/app_pages.dart';
 import 'package:eso_akte_sikhi/app/shared/const/colors.dart';
+import 'package:eso_akte_sikhi/app/shared/const/image_asset.dart';
 import 'package:eso_akte_sikhi/app/shared/const/svg_asset.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../controllers/drawing_page_controller.dart';
@@ -43,7 +45,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(Routes.ITEM_LIST);
+                    Get.offAllNamed(Routes.ITEM_LIST);
                   },
                   child: SvgPicture.asset(
                     SVGAsset.back,
@@ -99,8 +101,9 @@ class DrawingPageView extends GetView<DrawingPageController> {
       body: Column(
         children: [
           Expanded(
-            child: Container(
-              color: const Color.fromARGB(96, 211, 209, 209),
+            child: SvgPicture.asset(
+              controller.svgPath,
+              fit: BoxFit.fitWidth,
             ),
           ),
           Container(
@@ -150,7 +153,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
         color: EASColors.lightReddish,
         height: 130 + Get.mediaQuery.padding.bottom,
         width: Get.width,
-        padding: EdgeInsets.only(bottom: Get.mediaQuery.padding.bottom),
+        padding: EdgeInsets.only(bottom: Get.mediaQuery.padding.bottom - 10),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: ListView.builder(
@@ -161,7 +164,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                 return Column(
                   mainAxisAlignment:
                       controller.selectedColorIndex.value == index
-                          ? MainAxisAlignment.start
+                          ? MainAxisAlignment.center
                           : MainAxisAlignment.end,
                   children: [
                     GestureDetector(
@@ -169,10 +172,25 @@ class DrawingPageView extends GetView<DrawingPageController> {
                         controller.selectedColorIndex.value = index;
                       },
                       child: Container(
-                        margin: const EdgeInsets.only(right: 8),
-                        width: 32,
-                        height: 76,
-                        color: EASColors.selectedColor[index],
+                        margin: controller.selectedColorIndex.value == index
+                            ? const EdgeInsets.only(right: 0)
+                            : const EdgeInsets.only(right: 8),
+                        width: controller.selectedColorIndex.value == index
+                            ? 55
+                            : 32,
+                        height: controller.selectedColorIndex.value == index
+                            ? 105
+                            : 76,
+                        // color: EASColors.selectedColor[index],
+                        child: Image.asset(
+                          controller.selectedColorIndex.value == index
+                              ? ImageAsset.opened_can
+                              : ImageAsset.closed_can,
+                          width: 32,
+                          height: 64,
+                          colorBlendMode: BlendMode.modulate,
+                          color: EASColors.selectedColor[index],
+                        ),
                       ),
                     ),
                   ],

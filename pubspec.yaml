@@ -34,6 +34,7 @@ flutter:
     - assets/
     - assets//art_objs/
     - assets/edit_bar/
+    - assets/drawTools/
 
   fonts:
     - family: Jokerman

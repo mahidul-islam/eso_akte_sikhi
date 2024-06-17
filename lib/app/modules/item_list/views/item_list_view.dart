@@ -116,7 +116,10 @@ class Box extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(Routes.DRAWING_PAGE);
+        Get.toNamed(
+          Routes.DRAWING_PAGE,
+          parameters: {'svgPath': artObjPaths[index]},
+        );
       },
       child: Container(
         decoration: BoxDecoration(
