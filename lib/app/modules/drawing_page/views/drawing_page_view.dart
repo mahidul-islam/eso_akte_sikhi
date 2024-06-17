@@ -1,12 +1,15 @@
+import 'dart:math';
+import 'dart:ui';
+
 import 'package:eso_akte_sikhi/app/routes/app_pages.dart';
 import 'package:eso_akte_sikhi/app/shared/const/colors.dart';
 import 'package:eso_akte_sikhi/app/shared/const/image_asset.dart';
 import 'package:eso_akte_sikhi/app/shared/const/svg_asset.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../controllers/drawing_page_controller.dart';
+import '../model/model.dart';
 
 class DrawingPageView extends GetView<DrawingPageController> {
   const DrawingPageView({super.key});
@@ -102,7 +105,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
         children: [
           Expanded(
             child: SvgPicture.asset(
-              controller.svgPath,
+              controller.svgPath.value,
               fit: BoxFit.fitWidth,
             ),
           ),
@@ -122,20 +125,27 @@ class DrawingPageView extends GetView<DrawingPageController> {
                     data: const SliderThemeData(
                       trackHeight: 25,
                     ),
-                    child: Slider(
-                      activeColor: EASColors.violet.withOpacity(0.4),
-                      inactiveColor: EASColors.violet.withOpacity(0.4),
-                      thumbColor: EASColors.orange,
-                      value: 3,
-                      max: 20,
-                      min: 0,
-                      onChanged: (_) {},
-                    ),
+                    child: Obx(() {
+                      return Slider(
+                        value:
+                            pow(controller.selectedWidth?.value ?? 0, 1 / 1.5)
+                                .toDouble(),
+                        min: 1,
+                        max: 40,
+                        onChanged: (value) {
+                          controller.selectedWidth?.value =
+                              pow(value, 1.5).toDouble();
+                        },
+                        activeColor: EASColors.violet.withOpacity(0.4),
+                        inactiveColor: EASColors.violet.withOpacity(0.4),
+                        thumbColor: EASColors.orange,
+                      );
+                    }),
                   ),
                 ),
                 SvgPicture.asset(
                   SVGAsset.rubber,
-                  height: 30.0,
+                  height: 30.1,
                   width: 30.0,
                 ),
                 const SizedBox(width: 4),
@@ -181,7 +191,6 @@ class DrawingPageView extends GetView<DrawingPageController> {
                         height: controller.selectedColorIndex.value == index
                             ? 105
                             : 76,
-                        // color: EASColors.selectedColor[index],
                         child: Image.asset(
                           controller.selectedColorIndex.value == index
                               ? ImageAsset.opened_can
@@ -202,5 +211,54 @@ class DrawingPageView extends GetView<DrawingPageController> {
         ),
       ),
     );
+  }
+}
+
+class DrawingPainter extends CustomPainter {
+  final List<SingleLineDrawingData> drawingPoints;
+  final Path svgPath;
+
+  DrawingPainter({required this.drawingPoints, required this.svgPath});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.translate((size.width / 2) - 150, (size.height / 2) - 150);
+    canvas.clipPath(svgPath);
+    canvas.drawPath(
+      svgPath,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..color = Colors.black
+        ..isAntiAlias = true
+        ..strokeWidth = 5,
+    );
+    canvas.translate(-((size.width / 2) - 150), -((size.height / 2) - 150));
+    canvas.saveLayer(Rect.fromLTWH(0, 0, size.width, size.height), Paint());
+    for (var drawingPoint in drawingPoints) {
+      final paint = Paint()
+        ..color = drawingPoint.color
+        ..isAntiAlias = true
+        ..strokeWidth = drawingPoint.width
+        ..strokeCap = StrokeCap.round
+        ..blendMode = drawingPoint.eraser ? BlendMode.clear : BlendMode.srcOver;
+
+      for (var i = 0; i < drawingPoint.offsets.length; i++) {
+        var notLastOffset = i != drawingPoint.offsets.length - 1;
+
+        if (notLastOffset) {
+          final current = drawingPoint.offsets[i];
+          final next = drawingPoint.offsets[i + 1];
+          canvas.drawLine(current, next, paint);
+        } else {
+          canvas.drawPoints(PointMode.points, drawingPoint.offsets, paint);
+        }
+      }
+    }
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
   }
 }
