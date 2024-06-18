@@ -149,16 +149,20 @@ class DrawingPageView extends GetView<DrawingPageController> {
                     child: SizedBox(
                       width: Get.width,
                       height: Get.height / 2,
+                      child: Center(
+                        child: SvgPicture.asset(
+                          controller.svgPath.value,
+                          width: Get.width / 2,
+                          height: Get.height / 3,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
             // Expanded(
-            //   child: SvgPicture.asset(
-            //     controller.svgPath.value,
-            //     fit: BoxFit.fitWidth,
-            //   ),
+
             // ),
             Container(
               padding: const EdgeInsets.all(10),
@@ -195,10 +199,15 @@ class DrawingPageView extends GetView<DrawingPageController> {
                           thumbColor: EASColors.orange,
                         )),
                   ),
-                  SvgPicture.asset(
-                    SVGAsset.rubber,
-                    height: 30.1,
-                    width: 30.0,
+                  GestureDetector(
+                    onTap: () {
+                      controller.isEraser?.value = true;
+                    },
+                    child: SvgPicture.asset(
+                      SVGAsset.rubber,
+                      height: 30.0,
+                      width: 30.0,
+                    ),
                   ),
                   const SizedBox(width: 4),
                   SvgPicture.asset(
@@ -232,6 +241,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                   children: [
                     GestureDetector(
                       onTap: () {
+                        controller.isEraser?.value = false;
                         controller.selectedColorIndex.value = index;
                       },
                       child: Container(
