@@ -156,6 +156,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                     painter: DrawingPainter(
                       drawingPoints: controller.drawingPoints,
                       repaint: controller.drawingPoints.reactive,
+                      svgPath: controller.applePath,
                     ),
                     child: SizedBox(
                       width: Get.width,
