@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../model/model.dart';
@@ -30,8 +31,9 @@ class DrawingPainter extends CustomPainter {
 
   DrawingPainter({
     required this.drawingPoints,
+    required Listenable repaint,
     // required this.svgPath,
-  });
+  }) : super(repaint: repaint);
 
   @override
   void paint(Canvas canvas, Size size) {
