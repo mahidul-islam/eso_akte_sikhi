@@ -65,7 +65,9 @@ class DrawingPageView extends GetView<DrawingPageController> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    controller.drawingPoints.removeLast();
+                  },
                   child: SvgPicture.asset(
                     SVGAsset.undo,
                     height: 50.0,
@@ -73,7 +75,14 @@ class DrawingPageView extends GetView<DrawingPageController> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    if (controller.drawingPoints.length <
+                        controller.historyDrawingPoints.length) {
+                      final index = controller.drawingPoints.length;
+                      controller.drawingPoints
+                          .add(controller.historyDrawingPoints[index]);
+                    }
+                  },
                   child: SvgPicture.asset(
                     SVGAsset.redo,
                     height: 50.0,
@@ -120,8 +129,9 @@ class DrawingPageView extends GetView<DrawingPageController> {
 
                   if (controller.currentDrawingPoint == null) return;
                   controller.drawingPoints.add(controller.currentDrawingPoint);
-                  controller.historyDrawingPoints.value =
-                      List.of(controller.drawingPoints);
+                  controller.historyDrawingPoints.clear();
+                  controller.historyDrawingPoints
+                      .addAll(controller.drawingPoints);
                 },
                 onPanUpdate: (details) {
                   if (controller.currentDrawingPoint == null) return;
@@ -133,8 +143,9 @@ class DrawingPageView extends GetView<DrawingPageController> {
                   );
                   controller.drawingPoints.last =
                       controller.currentDrawingPoint!;
-                  controller.historyDrawingPoints.value =
-                      List.of(controller.drawingPoints);
+                  controller.historyDrawingPoints.clear();
+                  controller.historyDrawingPoints
+                      .addAll(controller.drawingPoints);
                 },
                 onPanEnd: (_) {
                   controller.currentDrawingPoint = null;

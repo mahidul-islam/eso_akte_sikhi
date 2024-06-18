@@ -9,8 +9,8 @@ class DrawingPageController extends GetxController {
   RxString svgPath = RxString('');
   RxnInt selectedColorIndex = RxnInt();
   RxList<SingleLineDrawingData?> historyDrawingPoints =
-      <SingleLineDrawingData>[].obs;
-  RxList<SingleLineDrawingData?> drawingPoints = <SingleLineDrawingData>[].obs;
+      RxList.empty(growable: true);
+  RxList<SingleLineDrawingData?> drawingPoints = RxList.empty(growable: true);
 
   Rx<Color?> selectedColor = Colors.black.obs;
   RxDouble? selectedWidth = 20.0.obs;
