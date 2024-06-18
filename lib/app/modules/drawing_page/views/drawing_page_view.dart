@@ -183,14 +183,27 @@ class DrawingPageView extends GetView<DrawingPageController> {
               height: 90,
               child: Row(
                 children: [
-                  SvgPicture.asset(
-                    SVGAsset.dot,
-                    height: controller.selectedWidth?.value,
-                    width: controller.selectedWidth?.value,
-                    colorFilter: ColorFilter.mode(
-                        EASColors.selectedColor[
-                            controller.selectedColorIndex.value ?? 0],
-                        BlendMode.srcATop),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(500),
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 2,
+                      ),
+                    ),
+                    width: Get.width / 10,
+                    height: Get.width / 10,
+                    child: Center(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: EASColors.selectedColor[
+                              controller.selectedColorIndex.value ?? 0],
+                        ),
+                        height: controller.selectedWidth?.value,
+                        width: controller.selectedWidth?.value,
+                      ),
+                    ),
                   ),
                   Expanded(
                     child: SliderTheme(
@@ -222,7 +235,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                       width: 30.0,
                     ),
                   ),
-                  const SizedBox(width: 4),
+                  const SizedBox(width: 10),
                   SvgPicture.asset(
                     SVGAsset.pan,
                     height: 30.0,
