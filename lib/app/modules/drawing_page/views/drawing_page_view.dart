@@ -113,49 +113,52 @@ class DrawingPageView extends GetView<DrawingPageController> {
             padding: const EdgeInsets.all(10),
             color: EASColors.orange.withOpacity(0.4),
             height: 90,
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  SVGAsset.dot,
-                  height: 30.0,
-                  width: 30.0,
-                ),
-                Expanded(
-                  child: SliderTheme(
-                    data: const SliderThemeData(
-                      trackHeight: 25,
-                    ),
-                    child: Obx(() {
-                      return Slider(
-                        value:
-                            pow(controller.selectedWidth?.value ?? 0, 1 / 1.5)
-                                .toDouble(),
-                        min: 1,
-                        max: 40,
-                        onChanged: (value) {
-                          controller.selectedWidth?.value =
-                              pow(value, 1.5).toDouble();
-                        },
-                        activeColor: EASColors.violet.withOpacity(0.4),
-                        inactiveColor: EASColors.violet.withOpacity(0.4),
-                        thumbColor: EASColors.orange,
-                      );
-                    }),
+            child: Obx(() {
+              return Row(
+                children: [
+                  SvgPicture.asset(
+                    SVGAsset.dot,
+                    height: controller.selectedWidth?.value,
+                    width: controller.selectedWidth?.value,
+                    colorFilter: ColorFilter.mode(
+                        EASColors.selectedColor[
+                            controller.selectedColorIndex.value ?? 0],
+                        BlendMode.srcATop),
                   ),
-                ),
-                SvgPicture.asset(
-                  SVGAsset.rubber,
-                  height: 30.1,
-                  width: 30.0,
-                ),
-                const SizedBox(width: 4),
-                SvgPicture.asset(
-                  SVGAsset.pan,
-                  height: 30.0,
-                  width: 30.0,
-                ),
-              ],
-            ),
+                  Expanded(
+                    child: SliderTheme(
+                        data: const SliderThemeData(
+                          trackHeight: 25,
+                        ),
+                        child: Slider(
+                          value:
+                              pow(controller.selectedWidth?.value ?? 0, 1 / 1.5)
+                                  .toDouble(),
+                          min: 1,
+                          max: 15,
+                          onChanged: (value) {
+                            controller.selectedWidth?.value =
+                                pow(value, 1.5).toDouble();
+                          },
+                          activeColor: EASColors.violet.withOpacity(0.4),
+                          inactiveColor: EASColors.violet.withOpacity(0.4),
+                          thumbColor: EASColors.orange,
+                        )),
+                  ),
+                  SvgPicture.asset(
+                    SVGAsset.rubber,
+                    height: 30.1,
+                    width: 30.0,
+                  ),
+                  const SizedBox(width: 4),
+                  SvgPicture.asset(
+                    SVGAsset.pan,
+                    height: 30.0,
+                    width: 30.0,
+                  ),
+                ],
+              );
+            }),
           ),
         ],
       ),
