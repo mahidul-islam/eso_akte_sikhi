@@ -157,14 +157,16 @@ class DrawingPageView extends GetView<DrawingPageController> {
                       drawingPoints: controller.drawingPoints,
                       repaint: controller.drawingPoints.reactive,
                       svgPath: controller.applePath,
+                      wsvg: controller.wsvg?.value ?? 0,
+                      hsvg: controller.hsvg?.value ?? 0,
                     ),
                     child: SizedBox(
-                      // width: Get.width,
+                      width: Get.width,
                       height: Get.height / 2,
                       child: Center(
                         child: SvgPicture.asset(
                           controller.svgPath.value,
-                          // width: Get.width / 2,
+                          width: Get.width / 2,
                           height: Get.height / 3,
                         ),
                       ),

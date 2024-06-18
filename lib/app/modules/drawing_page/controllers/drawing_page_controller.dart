@@ -17,7 +17,10 @@ class DrawingPageController extends GetxController {
   RxDouble? selectedWidth = 20.0.obs;
   RxBool? isEraser = false.obs;
   RxString? pathData = RxString('');
-  RxString? Height = RxString('');
+  RxString? heightSVG = RxString('');
+  RxString? widhthSVG = RxString('');
+  RxDouble? hsvg = 0.0.obs;
+  RxDouble? wsvg = 0.0.obs;
 
   late Path applePath;
   late SingleLineDrawingData? currentDrawingPoint;
@@ -28,11 +31,13 @@ class DrawingPageController extends GetxController {
     svgPath.value = Get.parameters['svgPath'] ?? '';
     svgPath.value =
         '/Volumes/code/delete/cope/hope/Testing/landf/eso_akte_sikhi/assets/art_objs/test.svg';
-    Height?.value = await extractHeight(svgPath.value) ?? '';
-    double? temp = double.tryParse(Height?.value ?? '');
+    heightSVG?.value = await extractHeight(svgPath.value) ?? '';
+    widhthSVG?.value = await extractWidhth(svgPath.value) ?? '';
+    wsvg?.value = double.tryParse(widhthSVG?.value ?? '') ?? 0;
+    hsvg?.value = double.tryParse(heightSVG?.value ?? '') ?? 0;
     pathData?.value = await extractPathData(svgPath.value) ?? '';
     pathData?.value = scaleSvgPath(
-        pathData?.value ?? '', (Get.height / 3 / (temp?.toInt() ?? 1)));
+        pathData?.value ?? '', (Get.height / 3 / (hsvg?.toInt() ?? 1)));
     applePath = parseSvgPath(pathData?.value ?? '');
 
     // print(pathData?.value);
@@ -74,13 +79,34 @@ class DrawingPageController extends GetxController {
       return 'Error reading file: $e';
     }
   }
+
+  Future<String?> extractWidhth(String assetPath) async {
+    try {
+      String svgData = await rootBundle.loadString(assetPath);
+      RegExp regExp = RegExp(r'width="([^"]+)"');
+      RegExpMatch? match = regExp.firstMatch(svgData);
+
+      if (match != null) {
+        String? pathHeight = match.group(1);
+        return pathHeight;
+      } else {
+        return 'No w data found';
+      }
+    } catch (e) {
+      return 'Error reading file: $e';
+    }
+  }
 }
 
 class DrawingPainter extends CustomPainter {
   final List<SingleLineDrawingData?> drawingPoints;
   final Path svgPath;
+  final double wsvg;
+  final double hsvg;
 
   DrawingPainter({
+    required this.wsvg,
+    required this.hsvg,
     required this.drawingPoints,
     required Listenable repaint,
     required this.svgPath,
@@ -88,7 +114,7 @@ class DrawingPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    double k = 130, l = 63;
+    double k = wsvg + 30, l = hsvg - 60;
     canvas.translate((size.width / 2) - k, (size.height / 3) - l);
     canvas.clipPath(svgPath);
     canvas.drawPath(
