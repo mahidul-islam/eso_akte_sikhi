@@ -101,20 +101,70 @@ class DrawingPageView extends GetView<DrawingPageController> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SvgPicture.asset(
-              controller.svgPath.value,
-              fit: BoxFit.fitWidth,
+      body: Obx(() {
+        return Column(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onPanStart: (details) {
+                  controller.currentDrawingPoint = SingleLineDrawingData(
+                    id: DateTime.now().microsecondsSinceEpoch,
+                    offsets: [
+                      details.localPosition,
+                    ],
+                    color: EASColors.selectedColor[
+                        controller.selectedColorIndex.value ?? 0],
+                    width: controller.selectedWidth?.value ?? 0,
+                    eraser: controller.isEraser?.value ?? false,
+                  );
+
+                  if (controller.currentDrawingPoint == null) return;
+                  controller.drawingPoints.add(controller.currentDrawingPoint);
+                  controller.historyDrawingPoints.value =
+                      List.of(controller.drawingPoints);
+                },
+                onPanUpdate: (details) {
+                  if (controller.currentDrawingPoint == null) return;
+
+                  controller.currentDrawingPoint =
+                      controller.currentDrawingPoint?.copyWith(
+                    offsets: controller.currentDrawingPoint!.offsets
+                      ..add(details.localPosition),
+                  );
+                  controller.drawingPoints.last =
+                      controller.currentDrawingPoint!;
+                  controller.historyDrawingPoints.value =
+                      List.of(controller.drawingPoints);
+                },
+                onPanEnd: (_) {
+                  controller.currentDrawingPoint = null;
+                },
+                child: ColoredBox(
+                  color: Colors.white,
+                  child: CustomPaint(
+                    painter: DrawingPainter(
+                      drawingPoints: controller.drawingPoints,
+                      // svgPath: penguinePath,
+                    ),
+                    child: SizedBox(
+                      width: Get.width,
+                      height: Get.height / 2,
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            color: EASColors.orange.withOpacity(0.4),
-            height: 90,
-            child: Obx(() {
-              return Row(
+            // Expanded(
+            //   child: SvgPicture.asset(
+            //     controller.svgPath.value,
+            //     fit: BoxFit.fitWidth,
+            //   ),
+            // ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              color: EASColors.orange.withOpacity(0.4),
+              height: 90,
+              child: Row(
                 children: [
                   SvgPicture.asset(
                     SVGAsset.dot,
@@ -157,11 +207,11 @@ class DrawingPageView extends GetView<DrawingPageController> {
                     width: 30.0,
                   ),
                 ],
-              );
-            }),
-          ),
-        ],
-      ),
+              ),
+            ),
+          ],
+        );
+      }),
       bottomNavigationBar: Container(
         color: EASColors.lightReddish,
         height: 130 + Get.mediaQuery.padding.bottom,
@@ -214,54 +264,5 @@ class DrawingPageView extends GetView<DrawingPageController> {
         ),
       ),
     );
-  }
-}
-
-class DrawingPainter extends CustomPainter {
-  final List<SingleLineDrawingData> drawingPoints;
-  final Path svgPath;
-
-  DrawingPainter({required this.drawingPoints, required this.svgPath});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.translate((size.width / 2) - 150, (size.height / 2) - 150);
-    canvas.clipPath(svgPath);
-    canvas.drawPath(
-      svgPath,
-      Paint()
-        ..style = PaintingStyle.stroke
-        ..color = Colors.black
-        ..isAntiAlias = true
-        ..strokeWidth = 5,
-    );
-    canvas.translate(-((size.width / 2) - 150), -((size.height / 2) - 150));
-    canvas.saveLayer(Rect.fromLTWH(0, 0, size.width, size.height), Paint());
-    for (var drawingPoint in drawingPoints) {
-      final paint = Paint()
-        ..color = drawingPoint.color
-        ..isAntiAlias = true
-        ..strokeWidth = drawingPoint.width
-        ..strokeCap = StrokeCap.round
-        ..blendMode = drawingPoint.eraser ? BlendMode.clear : BlendMode.srcOver;
-
-      for (var i = 0; i < drawingPoint.offsets.length; i++) {
-        var notLastOffset = i != drawingPoint.offsets.length - 1;
-
-        if (notLastOffset) {
-          final current = drawingPoint.offsets[i];
-          final next = drawingPoint.offsets[i + 1];
-          canvas.drawLine(current, next, paint);
-        } else {
-          canvas.drawPoints(PointMode.points, drawingPoint.offsets, paint);
-        }
-      }
-    }
-    canvas.restore();
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
   }
 }
