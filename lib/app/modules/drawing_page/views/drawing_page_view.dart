@@ -1,6 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
-
 import 'package:eso_akte_sikhi/app/routes/app_pages.dart';
 import 'package:eso_akte_sikhi/app/shared/const/colors.dart';
 import 'package:eso_akte_sikhi/app/shared/const/image_asset.dart';
@@ -194,15 +192,21 @@ class DrawingPageView extends GetView<DrawingPageController> {
                     width: Get.width / 10,
                     height: Get.width / 10,
                     child: Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: EASColors.selectedColor[
-                              controller.selectedColorIndex.value ?? 0],
-                        ),
-                        height: controller.selectedWidth?.value,
-                        width: controller.selectedWidth?.value,
-                      ),
+                      child: controller.isEraser?.value == false
+                          ? Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: EASColors.selectedColor[
+                                    controller.selectedColorIndex.value ?? 0],
+                              ),
+                              height: controller.selectedWidth?.value,
+                              width: controller.selectedWidth?.value,
+                            )
+                          : SvgPicture.asset(
+                              SVGAsset.rubber,
+                              height: 30.0,
+                              width: 30.0,
+                            ),
                     ),
                   ),
                   Expanded(
@@ -227,7 +231,8 @@ class DrawingPageView extends GetView<DrawingPageController> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      controller.isEraser?.value = true;
+                      controller.isEraser?.value =
+                          !(controller.isEraser?.value ?? false);
                     },
                     child: SvgPicture.asset(
                       SVGAsset.rubber,
