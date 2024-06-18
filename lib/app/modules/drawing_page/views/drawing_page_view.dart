@@ -57,7 +57,9 @@ class DrawingPageView extends GetView<DrawingPageController> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    controller.drawingPoints.clear();
+                  },
                   child: SvgPicture.asset(
                     SVGAsset.delete,
                     height: 50.0,
