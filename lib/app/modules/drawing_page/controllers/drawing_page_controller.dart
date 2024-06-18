@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:svg_path_parser/svg_path_parser.dart';
 import '../model/model.dart';
+import 'vector.dart';
 
 class DrawingPageController extends GetxController {
   RxString svgPath = RxString('');
@@ -26,6 +27,7 @@ class DrawingPageController extends GetxController {
     svgPath.value =
         '/Volumes/code/delete/cope/hope/Testing/landf/eso_akte_sikhi/assets/art_objs/test.svg';
     pathData?.value = await extractPathData(svgPath.value) ?? '';
+    pathData?.value = scaleSvgPath(pathData?.value ?? '', Get.width);
     applePath = parseSvgPath(pathData?.value ?? '');
     // print(pathData?.value);
   }
@@ -63,7 +65,7 @@ class DrawingPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.translate((size.width / 2) - 150, (size.height / 2) - 150);
+    canvas.translate((size.width / 2) - 150, (size.height / 3) - 150);
     canvas.clipPath(svgPath);
     canvas.drawPath(
       svgPath,
@@ -73,7 +75,7 @@ class DrawingPainter extends CustomPainter {
         ..isAntiAlias = true
         ..strokeWidth = 5,
     );
-    canvas.translate(-((size.width / 2) - 150), -((size.height / 2) - 150));
+    canvas.translate(-((size.width / 2) - 150), -((size.height / 3) - 150));
     canvas.saveLayer(Rect.fromLTWH(0, 0, size.width, size.height), Paint());
 
     for (var drawingPoint in drawingPoints) {
