@@ -20,6 +20,9 @@ class ItemListView extends GetView<ItemListController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // floatingActionButton: FloatingActionButton(onPressed: () {
+      //   controller.faoInit();
+      // }),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80.0),
         child: Container(
