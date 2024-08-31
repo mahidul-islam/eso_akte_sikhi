@@ -11,11 +11,12 @@ dependencies:
   flutter: 
     sdk: flutter
   firebase_core: ^3.1.0
-  cloud_firestore: ^5.0.1
+  # cloud_firestore: ^5.0.1
   flutter_svg: ^2.0.10+1
-  firebase_remote_config: ^5.0.1
+  # firebase_remote_config: ^5.0.1
   flutter_screenutil: ^5.9.3
   svg_path_parser: ^1.1.2
+  firebase_remote_config: ^5.1.0
 
 dev_dependencies: 
   flutter_lints: 3.0.2
