@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:eso_akte_sikhi/app/modules/drawing_page/widget/drawing_painter.dart';
 import 'package:eso_akte_sikhi/app/routes/app_pages.dart';
 import 'package:eso_akte_sikhi/app/shared/const/colors.dart';
 import 'package:eso_akte_sikhi/app/shared/const/image_asset.dart';
@@ -256,7 +257,9 @@ class DrawingPageView extends GetView<DrawingPageController> {
         color: EASColors.lightReddish,
         height: 130 + Get.mediaQuery.padding.bottom,
         width: Get.width,
-        padding: EdgeInsets.only(bottom: Get.mediaQuery.padding.bottom - 10),
+        padding: Get.mediaQuery.padding.bottom > 0
+            ? EdgeInsets.only(bottom: Get.mediaQuery.padding.bottom - 10)
+            : null,
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: ListView.builder(
