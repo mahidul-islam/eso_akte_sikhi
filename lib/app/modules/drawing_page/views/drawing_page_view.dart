@@ -16,7 +16,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80.0),
+        preferredSize: const Size.fromHeight(105.0),
         child: Container(
           margin: const EdgeInsets.fromLTRB(10, 60, 10, 0),
           decoration: const BoxDecoration(
