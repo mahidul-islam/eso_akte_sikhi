@@ -1,3 +1,4 @@
+// Imports Flutter, various assets, and the controller
 import 'dart:math';
 import 'package:eso_akte_sikhi/app/routes/app_pages.dart';
 import 'package:eso_akte_sikhi/app/shared/const/colors.dart';
@@ -9,14 +10,18 @@ import 'package:get/get.dart';
 import '../controllers/drawing_page_controller.dart';
 import '../model/model.dart';
 
+// The main View class for drawing
 class DrawingPageView extends GetView<DrawingPageController> {
   const DrawingPageView({super.key});
+
   @override
   Widget build(BuildContext context) {
+    // Scaffold with custom app bar and body
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80.0),
         child: Container(
+          // Outer container with a margin and background color
           margin: const EdgeInsets.fromLTRB(10, 60, 10, 0),
           decoration: const BoxDecoration(
             color: Colors.purpleAccent,
@@ -30,6 +35,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
             ),
           ),
           child: Container(
+            // Inner container with another background, forming a layered look
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -42,8 +48,10 @@ class DrawingPageView extends GetView<DrawingPageController> {
               ),
             ),
             child: Row(
+              // Icon row for navigation and actions
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                // Back button
                 GestureDetector(
                   onTap: () {
                     Get.offAllNamed(Routes.ITEM_LIST);
@@ -54,6 +62,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                     width: 50.0,
                   ),
                 ),
+                // Clear/drawings button
                 GestureDetector(
                   onTap: () {
                     controller.drawingPoints.clear();
@@ -64,6 +73,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                     width: 50.0,
                   ),
                 ),
+                // Undo button
                 GestureDetector(
                   onTap: () {
                     controller.drawingPoints.removeLast();
@@ -74,6 +84,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                     width: 50.0,
                   ),
                 ),
+                // Redo button
                 GestureDetector(
                   onTap: () {
                     if (controller.drawingPoints.length <
@@ -89,6 +100,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                     width: 50.0,
                   ),
                 ),
+                // Download icon (not implemented yet)
                 GestureDetector(
                   onTap: () {},
                   child: SvgPicture.asset(
@@ -97,6 +109,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                     width: 50.0,
                   ),
                 ),
+                // Share icon (not implemented yet)
                 GestureDetector(
                   onTap: () {},
                   child: SvgPicture.asset(
@@ -110,12 +123,15 @@ class DrawingPageView extends GetView<DrawingPageController> {
           ),
         ),
       ),
+      // Body uses Rx (Obx) for reactive UI updates
       body: Obx(() {
         return Column(
           children: [
             Expanded(
+              // GestureDetector for capturing drawing events
               child: GestureDetector(
                 onPanStart: (details) {
+                  // Create a new SingleLineDrawingData object on start
                   controller.currentDrawingPoint = SingleLineDrawingData(
                     id: DateTime.now().microsecondsSinceEpoch,
                     offsets: [
@@ -127,15 +143,17 @@ class DrawingPageView extends GetView<DrawingPageController> {
                     eraser: controller.isEraser?.value ?? false,
                   );
 
+                  // Add the newly created drawingPoint to the list
                   if (controller.currentDrawingPoint == null) return;
                   controller.drawingPoints.add(controller.currentDrawingPoint);
+                  // Update the history
                   controller.historyDrawingPoints.clear();
                   controller.historyDrawingPoints
                       .addAll(controller.drawingPoints);
                 },
                 onPanUpdate: (details) {
+                  // Continually add new offsets to the current line
                   if (controller.currentDrawingPoint == null) return;
-
                   controller.currentDrawingPoint =
                       controller.currentDrawingPoint?.copyWith(
                     offsets: controller.currentDrawingPoint!.offsets
@@ -143,17 +161,20 @@ class DrawingPageView extends GetView<DrawingPageController> {
                   );
                   controller.drawingPoints.last =
                       controller.currentDrawingPoint!;
+                  // Keep the history in sync
                   controller.historyDrawingPoints.clear();
                   controller.historyDrawingPoints
                       .addAll(controller.drawingPoints);
                 },
                 onPanEnd: (_) {
+                  // End current drawing stroke
                   controller.currentDrawingPoint = null;
                 },
                 child: ColoredBox(
                   color: Colors.white,
                   child: CustomPaint(
                     painter: DrawingPainter(
+                      // Paints the user’s drawn lines plus the SVG path
                       drawingPoints: controller.drawingPoints,
                       repaint: controller.drawingPoints.reactive,
                       svgPath: controller.applePath,
@@ -164,6 +185,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                       width: Get.width,
                       height: Get.height / 2,
                       child: Center(
+                        // The underlying SVG image
                         child: SvgPicture.asset(
                           controller.svgPath.value,
                           width: Get.width / 2,
@@ -175,15 +197,14 @@ class DrawingPageView extends GetView<DrawingPageController> {
                 ),
               ),
             ),
-            // Expanded(
-
-            // ),
+            // Color and eraser controls at the bottom
             Container(
               padding: const EdgeInsets.all(10),
               color: EASColors.orange.withOpacity(0.4),
               height: 90,
               child: Row(
                 children: [
+                  // Displays the current brush size/color or eraser icon
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(500),
@@ -197,6 +218,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                     child: Center(
                       child: controller.isEraser?.value == false
                           ? Container(
+                              // A circle that shows the chosen color / size
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: EASColors.selectedColor[
@@ -206,33 +228,37 @@ class DrawingPageView extends GetView<DrawingPageController> {
                               width: controller.selectedWidth?.value,
                             )
                           : SvgPicture.asset(
+                              // Eraser icon
                               SVGAsset.rubber,
                               height: 30.0,
                               width: 30.0,
                             ),
                     ),
                   ),
+                  // Slider changes the line width (non-linear scale)
                   Expanded(
                     child: SliderTheme(
-                        data: const SliderThemeData(
-                          trackHeight: 25,
-                        ),
-                        child: Slider(
-                          value:
-                              pow(controller.selectedWidth?.value ?? 0, 1 / 1.5)
-                                  .toDouble(),
-                          min: 1,
-                          max: 15,
-                          onChanged: (value) {
-                            controller.selectedWidth?.value =
-                                pow(value, 1.5).toDouble();
-                          },
-                          activeColor: EASColors.violet.withOpacity(0.4),
-                          inactiveColor: EASColors.violet.withOpacity(0.4),
-                          thumbColor: EASColors.orange,
-                        )),
+                      data: const SliderThemeData(
+                        trackHeight: 25,
+                      ),
+                      child: Slider(
+                        value:
+                            pow(controller.selectedWidth?.value ?? 0, 1 / 1.5)
+                                .toDouble(),
+                        min: 1,
+                        max: 15,
+                        onChanged: (value) {
+                          controller.selectedWidth?.value =
+                              pow(value, 1.5).toDouble();
+                        },
+                        activeColor: EASColors.violet.withOpacity(0.4),
+                        inactiveColor: EASColors.violet.withOpacity(0.4),
+                        thumbColor: EASColors.orange,
+                      ),
+                    ),
                   ),
                   GestureDetector(
+                    // Toggle eraser mode on/off
                     onTap: () {
                       controller.isEraser?.value =
                           !(controller.isEraser?.value ?? false);
@@ -244,6 +270,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
                     ),
                   ),
                   const SizedBox(width: 10),
+                  // Example pan icon (no specific action here)
                   SvgPicture.asset(
                     SVGAsset.pan,
                     height: 30.0,
@@ -255,6 +282,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
           ],
         );
       }),
+      // Bottom color palette for picking brush color
       bottomNavigationBar: Container(
         color: EASColors.lightReddish,
         height: 130 + Get.mediaQuery.padding.bottom,
@@ -267,6 +295,7 @@ class DrawingPageView extends GetView<DrawingPageController> {
             shrinkWrap: true,
             itemBuilder: (_, int index) {
               return Obx(() {
+                // Display a color can that expands if selected
                 return Column(
                   mainAxisAlignment:
                       controller.selectedColorIndex.value == index
