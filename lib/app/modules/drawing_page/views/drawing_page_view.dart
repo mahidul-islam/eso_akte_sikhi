@@ -1,6 +1,7 @@
 // Imports Flutter, various assets, and the controller
 import 'dart:math';
-import 'package:eso_akte_sikhi/app/modules/drawing_page/widget/drawing_painter.dart';
+import 'package:eso_akte_sikhi/app/modules/drawing_page/widget/drawing_painter.dart'
+    as widget;
 import 'package:eso_akte_sikhi/app/routes/app_pages.dart';
 import 'package:eso_akte_sikhi/app/shared/const/colors.dart';
 import 'package:eso_akte_sikhi/app/shared/const/image_asset.dart';
@@ -174,13 +175,13 @@ class DrawingPageView extends GetView<DrawingPageController> {
                 child: ColoredBox(
                   color: Colors.white,
                   child: CustomPaint(
-                    painter: DrawingPainter(
+                    painter: widget.DrawingPainter(
                       // Paints the user’s drawn lines plus the SVG path
                       drawingPoints: controller.drawingPoints,
                       repaint: controller.drawingPoints.reactive,
-                      svgPath: controller.applePath,
-                      wsvg: controller.wsvg?.value ?? 0,
-                      hsvg: controller.hsvg?.value ?? 0,
+                      // svgPath: controller.applePath,
+                      // wsvg: controller.wsvg?.value ?? 0,
+                      // hsvg: controller.hsvg?.value ?? 0,
                     ),
                     child: SizedBox(
                       width: Get.width,
