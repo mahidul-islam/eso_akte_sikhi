@@ -133,65 +133,72 @@ class DrawingPageView extends GetView<DrawingPageController> {
               // GestureDetector for capturing drawing events
               child: GestureDetector(
                 onPanStart: (details) {
-                  // Create a new SingleLineDrawingData object on start
+                  // Initialize a new drawing point when the user starts touching the screen
                   controller.currentDrawingPoint = SingleLineDrawingData(
-                    id: DateTime.now().microsecondsSinceEpoch,
+                    id: DateTime.now()
+                        .microsecondsSinceEpoch, // Unique identifier
                     offsets: [
-                      details.localPosition,
+                      details.localPosition, // Starting position of the touch
                     ],
                     color: EASColors.selectedColor[
-                        controller.selectedColorIndex.value ?? 0],
-                    width: controller.selectedWidth?.value ?? 0,
-                    eraser: controller.isEraser?.value ?? false,
+                        controller.selectedColorIndex.value ??
+                            0], // Selected color
+                    width: controller.selectedWidth?.value ??
+                        0, // Selected brush width
+                    eraser: controller.isEraser?.value ??
+                        false, // Eraser mode status
                   );
 
-                  // Add the newly created drawingPoint to the list
+                  // Add the new drawing point to the list of drawing points
                   if (controller.currentDrawingPoint == null) return;
                   controller.drawingPoints.add(controller.currentDrawingPoint);
-                  // Update the history
+
+                  // Update the history for undo/redo functionality
                   controller.historyDrawingPoints.clear();
                   controller.historyDrawingPoints
                       .addAll(controller.drawingPoints);
                 },
                 onPanUpdate: (details) {
-                  // Continually add new offsets to the current line
+                  // Update the current drawing point as the user moves their finger
                   if (controller.currentDrawingPoint == null) return;
                   controller.currentDrawingPoint =
                       controller.currentDrawingPoint?.copyWith(
                     offsets: controller.currentDrawingPoint!.offsets
-                      ..add(details.localPosition),
+                      ..add(details
+                          .localPosition), // Add new position to the path
                   );
                   controller.drawingPoints.last =
                       controller.currentDrawingPoint!;
-                  // Keep the history in sync
+
+                  // Sync the history with the updated drawing points
                   controller.historyDrawingPoints.clear();
                   controller.historyDrawingPoints
                       .addAll(controller.drawingPoints);
                 },
                 onPanEnd: (_) {
-                  // End current drawing stroke
+                  // Clear the current drawing point when the user lifts their finger
                   controller.currentDrawingPoint = null;
                 },
                 child: ColoredBox(
-                  color: Colors.white,
+                  color: Colors.white, // Set the background color
                   child: CustomPaint(
                     painter: widget.DrawingPainter(
-                      // Paints the user’s drawn lines plus the SVG path
-                      drawingPoints: controller.drawingPoints,
-                      repaint: controller.drawingPoints.reactive,
-                      // svgPath: controller.applePath,
-                      // wsvg: controller.wsvg?.value ?? 0,
-                      // hsvg: controller.hsvg?.value ?? 0,
+                      drawingPoints: controller.drawingPoints, // Draw the paths
+                      repaint: controller
+                          .drawingPoints.reactive, // Repaint on updates
+                      // svgPath: controller.applePath, // (Commented out) SVG path
+                      // wsvg: controller.wsvg?.value ?? 0, // (Commented out) SVG width
+                      // hsvg: controller.hsvg?.value ?? 0, // (Commented out) SVG height
                     ),
                     child: SizedBox(
                       width: Get.width,
                       height: Get.height / 2,
                       child: Center(
-                        // The underlying SVG image
+                        // Display the SVG image in the center
                         child: SvgPicture.asset(
-                          controller.svgPath.value,
-                          width: Get.width / 2,
-                          height: Get.height / 3,
+                          controller.svgPath.value, // Path to the SVG asset
+                          width: Get.width / 2, // SVG width
+                          height: Get.height / 3, // SVG height
                         ),
                       ),
                     ),

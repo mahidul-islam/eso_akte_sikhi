@@ -54,7 +54,7 @@ class DrawingPageController extends GetxController {
     // Retrieve SVG info passed in or use hard-coded path
     svgPath.value = Get.parameters['svgPath'] ?? '';
     svgPath.value =
-        '/Volumes/code/delete/cope/hope/Testing/landf/eso_akte_sikhi/assets/art_objs/test.svg';
+        '/Volumes/code/myProjects/eso_akte_sikhi/Assets/art_objs/test.svg';
 
     // Extract SVG height, width, and path data
     heightSVG?.value = await extractHeight(svgPath.value) ?? '';
@@ -64,6 +64,7 @@ class DrawingPageController extends GetxController {
     pathData?.value = await extractPathData(svgPath.value) ?? '';
 
     // Scale SVG path to fit screen height
+    // This is implemented in the vector.dart file
     pathData?.value = scaleSvgPath(
         pathData?.value ?? '', (Get.height / 3 / (hsvg?.toInt() ?? 1)));
 
@@ -122,10 +123,10 @@ class DrawingPageController extends GetxController {
 
 // Painter that draws the SVG outline and user-drawn lines
 class DrawingPainter extends CustomPainter {
-  final List<SingleLineDrawingData?> drawingPoints;
-  final Path svgPath;
-  final double wsvg;
-  final double hsvg;
+  final List<SingleLineDrawingData?> drawingPoints; // List of user-drawn lines
+  final Path svgPath; // Path of the SVG outline
+  final double wsvg; // Width of the SVG
+  final double hsvg; // Height of the SVG
 
   DrawingPainter({
     required this.wsvg,
@@ -137,12 +138,14 @@ class DrawingPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Translate and clip canvas to the shape of the SVG
+    // Calculate translation values
     double k = wsvg + 30, l = hsvg - 60;
+    // Move the canvas to center the SVG
     canvas.translate((size.width / 2) - k, (size.height / 3) - l);
+    // Clip the canvas to the SVG path
     canvas.clipPath(svgPath);
 
-    // Optionally draw the SVG path outline
+    // Draw the SVG path outline
     canvas.drawPath(
       svgPath,
       Paint()
@@ -152,41 +155,55 @@ class DrawingPainter extends CustomPainter {
         ..strokeWidth = 5,
     );
 
-    // Shift it back and prepare for drawing new lines
+    // Reset the translation
     canvas.translate(-((size.width / 2) - k), -((size.height / 3) - l));
+    // Save the current layer
     canvas.saveLayer(Rect.fromLTWH(0, 0, size.width, size.height), Paint());
 
-    // Draw each line in the drawingPoints list
     for (var drawingPoint in drawingPoints) {
+      // Iterate over each point in the drawingPoints list
       if (drawingPoint != null) {
-        final paint = Paint()
-          ..color = drawingPoint.color
-          ..isAntiAlias = true
-          ..strokeWidth = drawingPoint.width
-          ..strokeCap = StrokeCap.round
-          ..blendMode =
-              drawingPoint.eraser ? BlendMode.clear : BlendMode.srcOver;
+        // Check if the current drawingPoint is not null
+        final paint = Paint() // Create a new Paint object for drawing
+          ..color = drawingPoint
+              .color // Set the paint color to the drawingPoint's color
+          ..isAntiAlias = true // Enable anti-aliasing for smoother edges
+          ..strokeWidth = drawingPoint
+              .width // Set the stroke width based on drawingPoint's width
+          ..strokeCap = StrokeCap
+              .round // Set the stroke cap to round for rounded line endings
+          ..blendMode = drawingPoint.eraser
+              ? BlendMode.clear
+              : BlendMode
+                  .srcOver; // Use clear blend mode if eraser is active, otherwise default blend mode
 
-        // Connect offset points or draw single dots
+        // Draw lines or points based on the offsets
         for (var i = 0; i < drawingPoint.offsets.length; i++) {
-          var notLastOffset = i != drawingPoint.offsets.length - 1;
+          // Loop through each offset in drawingPoint
+          var notLastOffset = i !=
+              drawingPoint.offsets.length -
+                  1; // Check if the current offset is not the last one
           if (notLastOffset) {
-            final current = drawingPoint.offsets[i];
-            final next = drawingPoint.offsets[i + 1];
-            canvas.drawLine(current, next, paint);
+            // If it's not the last offset
+            final current = drawingPoint.offsets[i]; // Get the current offset
+            final next = drawingPoint.offsets[i + 1]; // Get the next offset
+            canvas.drawLine(current, next,
+                paint); // Draw a line segment from current to next
           } else {
-            canvas.drawPoints(PointMode.points, drawingPoint.offsets, paint);
+            // If it is the last offset
+            canvas.drawPoints(PointMode.points, drawingPoint.offsets,
+                paint); // Draw a single point
           }
         }
       }
     }
-    // Cleanup
+    // Restore the canvas to its previous state
     canvas.restore();
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    // Redraw every time new data is provided
+    // Always repaint when new data is provided
     return true;
   }
 }
