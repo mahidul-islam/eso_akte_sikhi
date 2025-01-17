@@ -260,7 +260,9 @@ class DrawingPageView extends GetView<DrawingPageController> {
                           controller.selectedWidth?.value =
                               pow(value, 1.5).toDouble();
                         },
-                        activeColor: EASColors.violet.withOpacity(0.4),
+                        activeColor: EASColors.violet.withValues(
+                          alpha: 0.8,
+                        ),
                         inactiveColor: EASColors.violet.withOpacity(0.4),
                         thumbColor: EASColors.orange,
                       ),
